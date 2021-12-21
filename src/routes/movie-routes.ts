@@ -8,7 +8,13 @@ const movies: Movie[] = [
     {id: 3, title: "Jurassic Park", year: 1995, animated: false}];
 
 movieRoutes.get('/', function(req, res){
-    res.json(movies);
+    let minYear: string = req.query.minYear as string;
+    let maxYear: string = req.query.maxYear as string;
+    let filteredMovies: Movie[] = movies.filter(movie => {
+        if(movie.year > parseInt(minYear) && movie.year < parseInt(maxYear)){
+            res.json(filteredMovies);
+        } else res.json(movies);
+    })
 });
 
 movieRoutes.get("/:id", function(req, res){
